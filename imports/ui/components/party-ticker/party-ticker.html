@@ -1,0 +1,21 @@
+<template name="party_ticker">
+    {{#each transactions}}
+        {{#if transaction_credit}}
+            <div class="callout success">
+                <h4>transactionsction!</h4>
+                <h6>{{timestamp}}</h6>
+
+                <p>From {{from}}</p>
+                <p>Amount {{amount}}</p>
+            </div>
+        {{else}}
+            <div class="callout alert">
+                <h4>Transaction!</h4>
+                <h6>{{timestamp}}</h6>
+
+                <p>From {{from}}</p>
+                <p>Amount {{amount}}</p>
+            </div>
+        {{/if}}
+    {{/each}}
+</template>
