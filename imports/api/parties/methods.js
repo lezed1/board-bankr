@@ -10,10 +10,14 @@ Meteor.methods({
     check(oldUserName, String);
     check(newUserName, String);
 
-    Parties.update({partyName}, {$pull: {members: oldUserName}})
+    if (Parties.findOne({partyName})) {
+        Parties.update({partyName}, {$pull: {members: oldUserName}});
+    } else {
+        Parties.insert({partyName, members: [], timestamp: new Date()});
+    }
 
     if (newUserName) {
-        Parties.update({partyName}, {$addToSet: {members: newUserName}})
+        Parties.update({partyName}, {$addToSet: {members: newUserName}});
     }
   },
 });

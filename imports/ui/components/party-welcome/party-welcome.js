@@ -2,7 +2,17 @@ import { Parties } from '/imports/api/parties/parties.js';
 import './party-welcome.html';
 
 Template.party_welcome.onRendered(function () {
-    this.$('#userName').val(Session.get('userName'));
+    const partyName = FlowRouter.getParam("partyName");
+    const userName = Session.get('userName');
+
+    this.$('#userName').val(userName);
+
+    Meteor.call('parties.updateUserName', partyName, userName, userName, (error) => {
+        if (error) {
+            console.log(error);
+            alert(error.message);
+        }
+    });
 });
 
 Template.party_welcome.helpers({
