@@ -1,21 +1,26 @@
 <template name="party_ticker">
     {{#each transactions}}
         {{#if transaction_credit}}
-            <div class="callout success">
-                <h4>Transaction!</h4>
-                <h6>{{timestamp}}</h6>
-
-                <p>From {{from}}</p>
-                <p>Amount {{amount}}</p>
-            </div>
+            {{> transaction colorClass="success" transaction=this}}
         {{else}}
-            <div class="callout alert">
-                <h4>Transaction!</h4>
-                <h6>{{timestamp}}</h6>
-
-                <p>From {{from}}</p>
-                <p>Amount {{amount}}</p>
-            </div>
+            {{> transaction colorClass="alert" transaction=this}}
         {{/if}}
     {{/each}}
+</template>
+
+<template name="transaction">
+    <div class="callout {{colorClass}}">
+        {{#if transaction.title}}
+            <h4>{{transaction.title}}</h4>
+        {{else}}
+            <h4>Transaction!</h4>
+        {{/if}}
+        <h6>{{timestamp}}</h6>
+
+        <p>From <strong>{{transaction.from}}</strong>
+        {{#if transaction.to}}
+            to <strong>{{transaction.to}}</strong>
+        {{/if}}
+        for <strong>{{transaction.amount}}</strong></p>
+    </div>
 </template>

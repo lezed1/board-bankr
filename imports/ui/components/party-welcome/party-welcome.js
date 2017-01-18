@@ -1,25 +1,37 @@
+import { Parties } from '/imports/api/parties/parties.js';
 import './party-welcome.html';
+
+Template.party_welcome.onRendered(function () {
+    this.$('#userName').val(Session.get('userName'));
+});
 
 Template.party_welcome.helpers({
     partyName() {
         return FlowRouter.getParam("partyName");
+    },
+    timestamp() {
+        const partyName = FlowRouter.getParam("partyName");
+        const party = Parties.findOne({partyName: partyName}, {sort: {name: -1}});
+        if (party){
+            return moment(party.timestamp).fromNow();
+        } else {
+            return "";
+        }
     }
 });
 
-// Template.hello.onCreated(function helloOnCreated() {
-//   // counter starts at 0
-//   this.counter = new ReactiveVar(0);
-// });
+Template.party_welcome.events({
+    'input #userName': function (event, template) {
+        const partyName = FlowRouter.getParam("partyName");
+        const oldUserName = Session.get('userName');
+        const newUserName = event.target.value;
 
-// Template.hello.helpers({
-//   counter() {
-//     return Template.instance().counter.get();
-//   },
-// });
-
-// Template.hello.events({
-//   'click button'(event, instance) {
-//     // increment the counter when button is clicked
-//     instance.counter.set(instance.counter.get() + 1);
-//   },
-// });
+        Session.update('userName', newUserName);
+        Meteor.call('parties.updateUserName', partyName, oldUserName, newUserName, (error) => {
+            if (error) {
+                console.log(error);
+                alert(error.message);
+            }
+        });
+    }
+})

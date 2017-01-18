@@ -7,3 +7,5 @@ import './routes.js';
 Meteor.setInterval(function() {
     Session.set("minute_timer", new Date().getTime());
 }, 60000);
+
+Session.setDefaultPersistent("userName", "");

@@ -27,3 +27,4 @@ johanbrook:publication-collector  # Test a Meteor publication by collecting its 
 zurb:foundation-sites
 momentjs:moment
 session
+u2622:persistent-session

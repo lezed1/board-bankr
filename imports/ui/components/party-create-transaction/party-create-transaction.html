@@ -1,0 +1,31 @@
+<template name="party_create_transaction">
+  <form>
+    <div class="row medium-unstack">
+      <div class="medium-3 columns">
+        <label>To (optional)
+          <select name="to">
+            <option></option>
+            {{#each members}}
+              <option value="{{name}}">{{name}} ({{standing}})</option>
+            {{/each}}
+          </select>
+        </label>
+      </div>
+      <div class="medium-5 columns">
+        <label>Title (optional)
+          <input type="text" name="title" placeholder="Buying resources"/>
+        </label>
+      </div>
+      <div class="medium-4 columns">
+        <label>Amount (positive for gaining, negative for losing)
+          <div class="input-group">
+            <input class="input-group-field" type="number" name="amount" required placeholder="-5"/>
+            <div class="input-group-button">
+              <input type="submit" class="button" value="Transact!"/>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </form>
+</template>

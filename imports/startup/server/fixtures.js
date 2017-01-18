@@ -3,6 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Links } from '../../api/links/links.js';
 import { Transactions } from '/imports/api/transactions/transactions.js';
+import { Parties } from '/imports/api/parties/parties.js';
 
 Meteor.startup(() => {
   // if the Links collection is empty
@@ -32,24 +33,41 @@ Meteor.startup(() => {
 
     data.forEach(link => Links.insert(link));
   }
-});
-
-Meteor.startup(() => {
-  // if the Links collection is empty
+  
+  // if the Transactions collection is empty
   if (Transactions.find().count() === 0) {
     const data = [
       {
+        partyName: 'asdf',
+        title: 'Income',
         from: 'lezed1',
+        to: '',
         amount: 5,
         timestamp: new Date(),
       },
       {
+        partyName: 'asdf',
+        title: 'Buy resources',
         from: 'lezed1',
+        to: '',
         amount: -4,
         timestamp: moment().subtract(3, 'minutes').toDate(),
       },
     ];
 
     data.forEach(transactions => Transactions.insert(transactions));
+  }
+  
+  // if the Parties collection is empty
+  if (Parties.find().count() === 0) {
+    const data = [
+      {
+        partyName: 'asdf',
+        members: ['lezed1'],
+        timestamp: new Date(),
+      },
+    ];
+
+    data.forEach(party => Parties.insert(party));
   }
 });
